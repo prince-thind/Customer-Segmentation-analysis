@@ -1,4 +1,4 @@
 env_customer
 data/
-output/** */
+output/**
 !output/.gitkeep
