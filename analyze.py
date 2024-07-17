@@ -1,4 +1,7 @@
 import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+
 
 # Load the dataset
 df = pd.read_csv('./data/data.csv', encoding='ISO-8859-1')
@@ -27,3 +30,20 @@ rfm_df = df[['CustomerID', 'Recency']].drop_duplicates().merge(frequency, on='Cu
 
 # Save the RFM data to inspect it
 rfm_df.to_csv('./output/rfm_data_commit3.csv', index=False)
+
+# Load the RFM data created in the previous commit
+rfm_df = pd.read_csv('./output/rfm_data_commit3.csv')
+
+# Data Scaling: Scale the RFM values
+scaler = StandardScaler()
+rfm_scaled = scaler.fit_transform(rfm_df[['Recency', 'Frequency', 'Monetary']])
+
+# Apply K-Means Clustering
+kmeans = KMeans(n_clusters=4, random_state=42)
+kmeans.fit(rfm_scaled)
+
+# Add the cluster labels to the RFM DataFrame
+rfm_df['Cluster'] = kmeans.labels_
+
+# Save the clustered data for inspection
+rfm_df.to_csv('./output/clustered_data_commit4.csv', index=False)
