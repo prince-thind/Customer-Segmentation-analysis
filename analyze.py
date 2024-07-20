@@ -1,7 +1,8 @@
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans
-
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Load the dataset
 df = pd.read_csv('./data/data.csv', encoding='ISO-8859-1')
@@ -47,3 +48,19 @@ rfm_df['Cluster'] = kmeans.labels_
 
 # Save the clustered data for inspection
 rfm_df.to_csv('./output/clustered_data_commit4.csv', index=False)
+
+# Load the clustered data from the previous commit
+rfm_df = pd.read_csv('./output/clustered_data_commit4.csv')
+
+# Visualize the clusters
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='Recency', y='Monetary', hue='Cluster', data=rfm_df, palette='viridis')
+plt.title('Customer Segments')
+
+# Save the plot to a file
+plt.savefig('./output/customer_segments_plot.png')
+
+# Save the final clustered data to a CSV file
+rfm_df.to_csv('./output/customer_segments_output.csv', index=False)
+
+print("Final plot and clustered data saved.")
