@@ -29,11 +29,8 @@ monetary.columns = ['CustomerID', 'Monetary']
 # Combine Recency, Frequency, and Monetary into a DataFrame
 rfm_df = df[['CustomerID', 'Recency']].drop_duplicates().merge(frequency, on='CustomerID').merge(monetary, on='CustomerID')
 
-# Save the RFM data to inspect it
-rfm_df.to_csv('./output/rfm_data_commit3.csv', index=False)
-
-# Load the RFM data created in the previous commit
-rfm_df = pd.read_csv('./output/rfm_data_commit3.csv')
+# Save the RFM data for inspection
+rfm_df.to_csv('./output/rfm_data.csv', index=False)
 
 # Data Scaling: Scale the RFM values
 scaler = StandardScaler()
@@ -47,10 +44,7 @@ kmeans.fit(rfm_scaled)
 rfm_df['Cluster'] = kmeans.labels_
 
 # Save the clustered data for inspection
-rfm_df.to_csv('./output/clustered_data_commit4.csv', index=False)
-
-# Load the clustered data from the previous commit
-rfm_df = pd.read_csv('./output/clustered_data_commit4.csv')
+rfm_df.to_csv('./output/clustered_data.csv', index=False)
 
 # Visualize the clusters
 plt.figure(figsize=(10, 6))
