@@ -11,7 +11,7 @@ df = pd.read_csv('./data/data.csv', encoding='ISO-8859-1')
 df.dropna(subset=['CustomerID'], inplace=True)
 
 # Convert 'InvoiceDate' to datetime format
-df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'])
+df['InvoiceDate'] = pd.to_datetime(df['InvoiceDate'], format='%m/%d/%y %H:%M')
 
 # Recency: Calculate the number of days since the last purchase
 current_date = df['InvoiceDate'].max()
