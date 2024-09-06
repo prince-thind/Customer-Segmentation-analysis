@@ -26,6 +26,9 @@ df['TotalAmount'] = df['Quantity'] * df['UnitPrice']
 monetary = df.groupby('CustomerID')['TotalAmount'].sum().reset_index()
 monetary.columns = ['CustomerID', 'Monetary']
 
+# Sort by CustomerID and InvoiceDate in descending order
+df = df.sort_values(by=['CustomerID', 'InvoiceDate'], ascending=[True, False])
+
 # Combine Recency, Frequency, and Monetary into a DataFrame
 rfm_df = df[['CustomerID', 'Recency']].drop_duplicates().merge(frequency, on='CustomerID').merge(monetary, on='CustomerID')
 
